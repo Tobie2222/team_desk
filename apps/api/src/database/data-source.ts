@@ -1,8 +1,10 @@
 import { config } from "dotenv";
-import { resolve } from "path/win32";
-import { DataSource } from "typeorm/browser/data-source/index.js";
+import { resolve } from "node:path";
+import { DataSource } from "typeorm";
 
-config({ path: resolve(__dirname, '../../.env') });
+config({ path: resolve(__dirname, '../../../../.env') });
+const normalizedDir = __dirname.replace(/\\/g, '/');
+
 export default new DataSource({
     type: 'mysql',
     host: process.env.MYSQL_HOST,
@@ -10,7 +12,7 @@ export default new DataSource({
     username: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+    entities: [normalizedDir + '/../**/*.entity{.ts,.js}'],
+    migrations: [normalizedDir + '/migrations/**/*{.ts,.js}'],
     synchronize: false,
 });

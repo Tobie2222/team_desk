@@ -7,7 +7,7 @@ export const validationSchema = Joi.object({
     PORT: Joi.number().default(3000),
     MONGO_USER: Joi.string().required(),
     MONGO_PASSWORD: Joi.string().required(),
-    MONGO_DB_NAME: Joi.string().required(),
+    MONGO_DATABASE: Joi.string().required(),
     MONGO_HOST: Joi.string().required(),
     MONGO_PORT: Joi.number().required(),
     MYSQL_HOST: Joi.string().required(),
