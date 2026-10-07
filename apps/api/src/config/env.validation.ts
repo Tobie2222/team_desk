@@ -18,4 +18,7 @@ export const validationSchema = Joi.object({
   MYSQL_PASSWORD: Joi.string().required(),
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),
+  JWT_ACCESS_SECRET: Joi.string().required(),
+  JWT_ACCESS_EXPIRES_IN: Joi.string().default('15m'),
+  REFRESH_TOKEN_EXPIRES_IN_DAYS: Joi.number().default(7),
 });
