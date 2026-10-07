@@ -10,6 +10,7 @@ import { JwtModule } from '@nestjs/jwt';
 import type { StringValue } from 'ms';
 import { Organization } from 'src/organizations/ organizations.entity';
 import { TokenService } from './token.service';
+import { JwtStrategy } from './strategies/jwt-strategy';
 
 @Module({
   imports: [
@@ -32,6 +33,6 @@ import { TokenService } from './token.service';
   ],
 
   controllers: [AuthController],
-  providers: [AuthService, TokenService],
+  providers: [AuthService, TokenService, JwtStrategy],
 })
 export class AuthModule {}
