@@ -8,6 +8,12 @@ import { RedisModule } from './redis/redis.module';
 import { HealthModule } from './health/health.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guard/jwt-auth.guard';
+import { TenantGuard } from './auth/guard/tenant.guard';
+import { RolesGuard } from './auth/guard/roles.guard';
+import { ClsModule } from 'nestjs-cls';
+import { TenantModule } from './common/tenant/tenant.module';
 
 @Module({
   imports: [
@@ -41,8 +47,18 @@ import { AuthModule } from './auth/auth.module';
     RedisModule,
     HealthModule,
     AuthModule,
+    ClsModule.forRoot({
+      global: true,
+      middleware: { mount: true },
+    }),
+    TenantModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: TenantGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+  ],
 })
 export class AppModule {}
