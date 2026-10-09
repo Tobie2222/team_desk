@@ -14,6 +14,7 @@ import { TenantGuard } from './auth/guard/tenant.guard';
 import { RolesGuard } from './auth/guard/roles.guard';
 import { ClsModule } from 'nestjs-cls';
 import { TenantModule } from './common/tenant/tenant.module';
+import { MemberShipModule } from './memberships/membership.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { TenantModule } from './common/tenant/tenant.module';
       middleware: { mount: true },
     }),
     TenantModule,
+    MemberShipModule,
   ],
   controllers: [AppController],
   providers: [
