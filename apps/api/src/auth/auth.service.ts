@@ -143,4 +143,29 @@ export class AuthService {
     );
     return { success: true, message: 'Logged out successfully' };
   }
+
+  async getProfile(userId: string) {
+    const user = await this.dataSource.manager.findOne(User, {
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    const memberships = await this.dataSource
+      .createQueryBuilder()
+      .select('m.organizationId', 'organizationId')
+      .addSelect('o.name', 'organizationName')
+      .addSelect('m.role', 'role')
+      .from(Membership, 'm')
+      .innerJoin(Organization, 'o', 'o.id = m.organizationId')
+      .where('m.userId = :userId', { userId })
+      .getRawMany<{
+        organizationId: string;
+        organizationName: string;
+        role: MembershipRole;
+      }>();
+
+    return { id: user.id, email: user.email, name: user.name, memberships };
+  }
 }

@@ -40,7 +40,7 @@ export class AuthController {
   @SkipTenant()
   @Get('me')
   getMe(@CurrentUser() user: { userId: string }) {
-    return user;
+    return this.authService.getProfile(user.userId);
   }
 
   @Get('/admin-only-test')
