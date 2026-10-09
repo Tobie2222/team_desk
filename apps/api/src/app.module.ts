@@ -15,6 +15,7 @@ import { RolesGuard } from './auth/guard/roles.guard';
 import { ClsModule } from 'nestjs-cls';
 import { TenantModule } from './common/tenant/tenant.module';
 import { MemberShipModule } from './memberships/membership.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { MemberShipModule } from './memberships/membership.module';
     }),
     TenantModule,
     MemberShipModule,
+    ThrottlerModule.forRoot([{ name: 'default', ttl: 60_000, limit: 100 }]),
   ],
   controllers: [AppController],
   providers: [
@@ -61,6 +63,8 @@ import { MemberShipModule } from './memberships/membership.module';
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: TenantGuard },
     { provide: APP_GUARD, useClass: RolesGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
   ],
 })
 export class AppModule {}

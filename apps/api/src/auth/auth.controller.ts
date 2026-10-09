@@ -8,24 +8,28 @@ import { MembershipRole } from 'src/common/enums/membership-role.enums';
 import { Roles } from 'src/common/decorator/roles.decorator';
 import { Public } from 'src/common/decorator/public.decorator';
 import { SkipTenant } from 'src/common/decorator/skip-tenant.decorator';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Public()
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
   @Post('signup')
   signup(@Body() dto: SignupDto) {
     return this.authService.signup(dto);
   }
 
   @Public()
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
   @Post('login')
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }
 
   @Public()
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
   @Post('refresh')
   refresh(@Body() dto: RefreshDto) {
     return this.authService.refresh(dto);

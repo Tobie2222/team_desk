@@ -7,6 +7,7 @@ import {
 } from '@nestjs/terminus';
 import { RedisHealthIndicator } from './redis.health';
 import { Public } from 'src/common/decorator/public.decorator';
+import { SkipThrottle } from '@nestjs/throttler';
 
 @Controller('health')
 export class HealthController {
@@ -18,6 +19,7 @@ export class HealthController {
   ) {}
 
   @Public()
+  @SkipThrottle()
   @Get()
   @HealthCheck()
   check() {
