@@ -16,6 +16,7 @@ import { ClsModule } from 'nestjs-cls';
 import { TenantModule } from './common/tenant/tenant.module';
 import { MemberShipModule } from './memberships/membership.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { InvitationModule } from './invitations/invitation.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     RedisModule,
     HealthModule,
     AuthModule,
+    InvitationModule,
     ClsModule.forRoot({
       global: true,
       middleware: { mount: true },
