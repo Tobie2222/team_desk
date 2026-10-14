@@ -17,6 +17,7 @@ import { TenantModule } from './common/tenant/tenant.module';
 import { MemberShipModule } from './memberships/membership.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { InvitationModule } from './invitations/invitation.module';
+import { TicketModule } from './tickets/ticket.module.';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { InvitationModule } from './invitations/invitation.module';
     RedisModule,
     HealthModule,
     AuthModule,
+    TicketModule,
     InvitationModule,
     ClsModule.forRoot({
       global: true,
