@@ -36,4 +36,14 @@ export class MemberShipService {
       .orderBy('m.createdAt', 'ASC')
       .getRawMany<MemberListItem>();
   }
+
+  async findROleInCurrentOrganization(
+    userId: string,
+  ): Promise<MembershipRole | null> {
+    const { organizationId } = this.tenant.get();
+    const membership = await this.repo.findOne({
+      where: { userId, organizationId },
+    });
+    return membership?.role ?? null;
+  }
 }
